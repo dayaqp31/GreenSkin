@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es-CR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GreenSkin | Perfumes y Skin Care Coreano en Costa Rica</title>
+  <meta name="description" content="GreenSkin: Perfumes Bath & Body Works (₡15.900) y Skin Care Coreano (Skin1004, Mixsoon, Aqua, Anua). Envíos por Correos de Costa Rica y entregas en la GAM por Uber Flash. Pago por transferencia o SINPE Móvil." />
+  <meta property="og:title" content="GreenSkin | Perfumes y Skin Care Coreano en Costa Rica" />
+  <meta property="og:description" content="Perfumes originales y cosmética coreana. Envíos a todo Costa Rica y entregas en la GAM. Paga por transferencia o SINPE Móvil." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CR" />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    :root{
+      --ink:#0b0b0f; --bg:#ffffff; --muted:#6b7280; --accent:#1f8f5f; --accent-2:#e9f7ef; --border:#e5e7eb;
+      --radius:18px; --shadow:0 12px 32px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Fondo blanco con detalles de naturaleza */
+    body::before{
+      content:""; position:fixed; inset:0; pointer-events:none; opacity:.22;
+      background:
+        radial-gradient(1200px 600px at -10% 10%, #d1fae5 0, transparent 60%),
+        radial-gradient(900px 500px at 110% 80%, #bbf7d0 0, transparent 60%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 200 200" fill="none" opacity="0.06"><g fill="%231f8f5f"><path d="M60 120c20 30 60 40 80 0-30 10-50-10-80 0z"/><circle cx="30" cy="40" r="6"/><circle cx="160" cy="160" r="5"/><path d="M26 110c18 8 30 24 42 42-22-6-35-20-42-42z"/></g></svg>');
+      background-repeat:no-repeat; background-size:cover, cover, 600px; background-position:center;
+    }
+
+    /* Topbar + Header */
+    .topbar{display:flex;gap:8px;align-items:center;justify-content:center;padding:8px 16px;background:var(--accent-2);color:#065f46;font-weight:600}
+    header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--border)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;max-width:1200px;margin:0 auto}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+    .brand img{height:52px}
+
+    /* Menú y submenús */
+    .menu{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+    .menu a{padding:8px 12px;border-radius:999px}
+    .menu a.active, .menu a:hover{background:#f3f4f6}
+    .item{position:relative}
+    .item> a{display:inline-flex;align-items:center;gap:6px}
+    .submenu{position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow: var(--shadow);padding:8px;display:none;min-width:220px;z-index:100}
+    .item:hover .submenu{display:block}
+    .submenu a{display:block;padding:8px 10px;border-radius:8px;white-space:nowrap}
+    .submenu a:hover{background:#f3f4f6}
+
+    .search{display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid var(--border);padding:10px 12px;border-radius:999px;flex:1;max-width:540px}
+    .search input{border:0;background:transparent;outline:none;width:100%}
+    .actions{display:flex;gap:10px}
+    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:10px 14px;border-radius:999px;background:#fff;cursor:pointer;transition:.2s}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    .btn-solid{background:var(--ink);color:#fff;border-color:var(--ink)}
+    .btn-wa{background:#25d366;border-color:#25d366;color:#073b1a}
+
+    /* Hero */
+    .hero{max-width:1200px;margin:22px auto;padding:0 18px;display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:center}
+    .hero-card{background:linear-gradient(180deg,#ffffff,#f7fffb);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .hero h1{font-size:clamp(26px,3.2vw,40px);line-height:1.15;margin:0 0 10px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+
+    /* Tabs */
+    .tabs{max-width:1200px;margin:10px auto 0;padding:0 18px}
+    .tablist{display:flex;gap:10px;flex-wrap:wrap}
+    .tab{padding:10px 14px;border:1px solid var(--border);border-radius:999px;background:#fff;cursor:pointer}
+    .tab[aria-selected="true"]{background:var(--accent-2);border-color:#c7ead8}
+
+    /* Grid productos */
+    .grid{max-width:1200px;margin:18px auto;padding:0 18px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    @media (max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
+    .card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 2px 0 rgba(0,0,0,.03);display:flex;flex-direction:column}
+    .card img{aspect-ratio:1/1;object-fit:cover}
+    .card .p{padding:12px}
+    .price{font-weight:700}
+    .alt{color:var(--muted);font-size:13px}
+    .add{margin:10px 12px 14px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#f8fafc;cursor:pointer}
+    .add:hover{background:#eef2f7}
+
+    /* Canasta (drawer) */
+    .drawer{position:fixed;inset:0 0 0 auto;width:min(460px,92vw);background:#fff;border-left:1px solid var(--border);box-shadow: -20px 0 40px rgba(0,0,0,.12);transform:translateX(100%);transition:.25s;z-index:70;display:flex;flex-direction:column}
+    .drawer.open{transform:translateX(0)}
+    .drawer header{position:sticky;top:0;border-bottom:1px solid var(--border);padding:16px 18px;font-weight:800}
+    .drawer .content{padding:14px 18px;flex:1;overflow:auto}
+    .line{display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px dashed #e5e7eb;padding:10px 0}
+    .qty{display:flex;align-items:center;gap:8px}
+    .qty button{width:26px;height:26px;border:1px solid var(--border);border-radius:6px;background:#fff;cursor:pointer}
+    .checkout{border-top:1px solid var(--border);padding:14px 18px}
+    .checkout form{display:grid;gap:10px}
+    .note{font-size:13px;color:var(--muted)}
+
+    /* Footer */
+    footer{margin-top:30px;border-top:1px solid var(--border);background:#fff}
+    .foot{max-width:1200px;margin:0 auto;padding:24px 18px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media (max-width:700px){.foot{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="topbar">Envíos por Correos de Costa Rica · Entregas en la GAM por Uber Flash · Pago por transferencia o <strong>SINPE Móvil</strong></div>
+
+  <header>
+    <nav class="nav">
+      <div class="brand">
+        <!-- Reemplazá el src por la ruta real de tu logo -->
+        <img src="ChatGPT Image 7 sept 2025, 21_40_55.png" alt="Logo GreenSkin" />
+        <a href="#">GreenSkin</a>
+      </div>
+
+      <div class="search" role="search">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="#6b7280" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5M9.5 14A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14"/></svg>
+        <input id="q" type="search" placeholder="Buscar: Perfume Bath & Body Works, Skin Care Coreano Costa Rica…" aria-label="Buscar productos" />
+      </div>
+
+      <div class="menu" aria-label="Categorías">
+        <div class="item">
+          <a href="#" class="active" data-tab="skincare">Skin Care ▾</a>
+          <div class="submenu">
+            <a href="#" data-tab="skincare" data-query="Limpiador|Cleanser">Limpiadores Faciales</a>
+            <a href="#" data-tab="skincare" data-query="Toner|Tónico|Heartleaf">Tónicos</a>
+            <a href="#" data-tab="skincare" data-query="Serum|Ampolla|Ampoule|Essence">Serums</a>
+            <a href="#" data-tab="skincare" data-query="Crema|Cream|Moisturizer">Cremas Faciales</a>
+            <a href="#" data-tab="skincare" data-query="Protector|Sunscreen|SPF">Protector Solar</a>
+            <a href="#" data-tab="skincare" data-query="Exfoliante|Peeling|AHA|BHA">Exfoliantes</a>
+            <a href="#" data-tab="skincare" data-query="Tratamiento|Spot|Mascarilla|Mask">Tratamientos</a>
+          </div>
+        </div>
+        <div class="item">
+          <a href="#" data-tab="perfumes">Perfumes ▾</a>
+          <div class="submenu">
+            <a href="#" data-tab="perfumes" data-query="Splash|Mist">Splashes</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-wa" onclick="window.open('https://wa.me/50686434830','_blank')">WhatsApp</button>
+        <button id="openBag" class="btn btn-solid bag-btn" title="Canasta" aria-label="Abrir canasta">🧺 <span id="bagCount" style="display:none; margin-left:6px; background:#ef4444; color:#fff; border-radius:999px; padding:2px 6px; font-size:12px;">0</span></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-card">
+      <h1>Perfumes Originales y Skin Care Coreano de las mejores marcas, ahora en Costa Rica. ¡Tu rutina de belleza te espera!</h1>
+      <p>Marcas coreanas: <strong>Skin1004</strong>, <strong>Mixsoon</strong>, <strong>Aqua</strong> y <strong>Anua</strong>. Fragancias <strong>Bath & Body Works</strong> desde <strong>₡15.900</strong>.</p>
+      <div class="cta">
+        <a href="#grid" class="btn btn-solid">Ver productos coreanos</a>
+        <a href="#grid" class="btn">Explorar perfumes en Costa Rica</a>
+      </div>
+    </div>
+    <img src="https://images.unsplash.com/photo-1600180758890-6b94519a8baa?q=80&w=1200&auto=format&fit=crop" alt="Composición de productos de skin care en fondo blanco con hojas verdes" loading="lazy" style="border-radius: var(--radius); border:1px solid var(--border); box-shadow: var(--shadow);" />
+  </section>
+
+  <!-- TABS VISUALES -->
+  <section class="tabs" id="grid">
+    <div class="tablist">
+      <button class="tab" aria-selected="true" data-tab="skincare">Skin Care</button>
+      <button class="tab" aria-selected="false" data-tab="perfumes">Perfumes</button>
+    </div>
+  </section>
+
+  <!-- GRID DE PRODUCTOS -->
+  <section class="grid" id="productGrid" aria-live="polite"></section>
+
+  <!-- CANASTA -->
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Canasta de productos">
+    <header>Tu Canasta</header>
+    <div class="content">
+      <div id="bagLines"></div>
+    </div>
+    <div class="checkout">
+      <form id="orderForm">
+        <strong>Datos para el pedido</strong>
+        <input name="nombre" required placeholder="Nombre y apellidos" />
+        <input name="telefono" required placeholder="Teléfono / WhatsApp" />
+        <input name="provincia" placeholder="Provincia, cantón, distrito" />
+        <textarea name="direccion" rows="3" placeholder="Dirección exacta / Instrucciones"></textarea>
+        <label><input type="radio" name="pago" value="Transferencia bancaria" checked/> Transferencia bancaria</label>
+        <label><input type="radio" name="pago" value="SINPE Móvil"/> SINPE Móvil</label>
+        <p class="note">* No cobramos en el sitio. Te contactaremos para confirmar el pedido y coordinar el <strong>envío por Correos de Costa Rica</strong> o la <strong>entrega en la GAM por Uber Flash</strong>.</p>
+        <button class="btn btn-solid" type="submit">Enviar pedido por correo</button>
+        <button class="btn" type="button" id="shareWA">Compartir por WhatsApp</button>
+      </form>
+    </div>
+  </aside>
+
+  <footer>
+    <div class="foot">
+      <div>
+        <strong>GreenSkin</strong><br/>
+        WhatsApp: <a href="https://wa.me/50686434830" target="_blank">8643-4830</a><br/>
+        Correo: <a href="mailto:dayaquesada.31@gmail.com">dayaquesada.31@gmail.com</a>
+      </div>
+      <div class="note">Envíos a todo Costa Rica por <strong>Correos de Costa Rica</strong>. Entregas en la <strong>GAM por Uber Flash</strong>. Pago por <strong>Transferencia o SINPE Móvil</strong>.</div>
+    </div>
+  </footer>
+
+<script>
+/* ===== Catálogo (editá/añadí líneas) ===== */
+const CATALOG = [
+  // Skin Care Coreano
+  {id:'sk1004-amp-centella', tab:'skincare', brand:'Skin1004', name:"Ampolla Centella Asiatica", price:18900, img:'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?q=80&w=1200&auto=format&fit=crop', alt:'Foto de la ampolla Centella Asiatica Skin1004 para piel sensible'},
+  {id:'mixsoon-essence', tab:'skincare', brand:'Mixsoon', name:"Essence Bean", price:21500, img:'https://images.unsplash.com/photo-1611937622368-1fbc3b8a9cfe?q=80&w=1200&auto=format&fit=crop', alt:'Essence Mixsoon Bean para hidratación profunda'},
+  {id:'anua-toner', tab:'skincare', brand:'Anua', name:"Heartleaf 77% Soothing Toner", price:22900, img:'https://images.unsplash.com/photo-1611930021931-61b1183f5b2d?q=80&w=1200&auto=format&fit=crop', alt:'Toner Anua Heartleaf calmante'},
+  {id:'aqua-cleanser', tab:'skincare', brand:'Aqua', name:"Foam Cleanser", price:14500, img:'https://images.unsplash.com/photo-1585237001960-6fa7b3b4c06b?q=80&w=1200&auto=format&fit=crop', alt:'Limpiador facial Aqua en espuma'},
+
+  // Perfumes / Splashes Bath & Body Works
+  {id:'bbw-gingham', tab:'perfumes', brand:'Bath & Body Works', name:"Splash Gingham Gorgeous", price:15900, img:'https://images.unsplash.com/photo-1585386959984-a41552231681?q=80&w=1200&auto=format&fit=crop', alt:'Splash Gingham Gorgeous Bath & Body Works Costa Rica'},
+  {id:'bbw-japanese', tab:'perfumes', brand:'Bath & Body Works', name:"Japanese Cherry Blossom", price:15900, img:'https://images.unsplash.com/photo-1585386958264-491df9a4e19b?q=80&w=1200&auto=format&fit=crop', alt:'Splash Japanese Cherry Blossom Bath & Body Works'}
+];
+
+const grid = document.getElementById('productGrid');
+const tabs = document.querySelectorAll('.tab');
+const searchInput = document.getElementById('q');
+const drawer = document.getElementById('drawer');
+const openBagBtn = document.getElementById('openBag');
+const bagCount = document.getElementById('bagCount');
+const bagLines = document.getElementById('bagLines');
+const orderForm = document.getElementById('orderForm');
+const shareWA = document.getElementById('shareWA');
+
+let currentTab = 'skincare';
+let bag = {}; // {id: qty}
+
+function money(v){ return '₡'+v.toLocaleString('es-CR'); }
+
+function render(){
+  const q = searchInput.value.toLowerCase().trim();
+  const data = CATALOG
+    .filter(p => p.tab === currentTab && (!q || (p.name+' '+p.brand).toLowerCase().includes(q)));
+  grid.innerHTML = data.map(p => `
+    <article class="card" data-id="${p.id}">
+      <img src="${p.img}" alt="${p.alt}" loading="lazy"/>
+      <div class="p">
+        <div class="alt">${p.brand}</div>
+        <h3 style="margin:4px 0">${p.name}</h3>
+        <div class="price">${money(p.price)}</div>
+      </div>
+      <button class="add" onclick="addToBag('${p.id}')">Añadir a la canasta</button>
+    </article>`).join('');
+}
+
+function addToBag(id){ bag[id] = (bag[id]||0)+1; updateBag(); }
+function removeFromBag(id){ if(!bag[id]) return; bag[id]--; if(bag[id]<=0) delete bag[id]; updateBag(); }
+
+function updateBag(){
+  const entries = Object.entries(bag);
+  const list = entries.map(([id,qty])=>{
+    const p = CATALOG.find(x=>x.id===id);
+    return `<div class="line">
+      <div><strong>${p.name}</strong><div class="alt">${p.brand}</div></div>
+      <div class="qty"><button onclick="removeFromBag('${id}')">-</button><span>${qty}</span><button onclick="addToBag('${id}')">+</button></div>
+      <div>${money(p.price*qty)}</div>
+    </div>`;
+  }).join('');
+  bagLines.innerHTML = list || '<p class="alt">Tu canasta está vacía.</p>';
+
+  const total = entries.reduce((s,[id,qty])=>{const p=CATALOG.find(x=>x.id===id); return s+p.price*qty;},0);
+  const count = entries.reduce((s,[_id,qty])=>s+qty,0);
+  bagCount.style.display = count? 'inline-block':'none'; bagCount.textContent = count;
+
+  localStorage.setItem('greenskin_bag', JSON.stringify(bag));
+
+  const totalEl = document.getElementById('bagTotal');
+  if(totalEl) totalEl.textContent = money(total);
+  else {
+    const t = document.createElement('p');
+    t.id='bagTotal'; t.style.marginTop='8px';
+    t.innerHTML = `<strong>Total: ${money(total)}</strong>`;
+    document.querySelector('.checkout').prepend(t);
+  }
+}
+
+function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
+function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+
+openBagBtn.addEventListener('click', openDrawer);
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(); });
+
+/* Tabs visuales */
+for(const t of tabs){
+  t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected','false'));
+    t.setAttribute('aria-selected','true');
+    currentTab = t.dataset.tab; render();
+  });
+}
+
+/* Menú principal y submenús (fijan tab y aplican búsqueda por tipo) */
+for(const a of document.querySelectorAll('.menu a')){
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const tab = a.dataset.tab;
+    const qv  = a.dataset.query || '';
+    if(tab){ currentTab = tab; }
+    document.querySelectorAll('.menu > .item > a').forEach(x=>x.classList.remove('active'));
+    const top = a.closest('.item')?.querySelector('a[data-tab]');
+    if(top) top.classList.add('active');
+    searchInput.value = qv;
+    render();
+  });
+}
+
+searchInput.addEventListener('input', render);
+
+/* Persistencia canasta */
+try{ const saved = localStorage.getItem('greenskin_bag'); if(saved) bag = JSON.parse(saved)||{}; }catch{}
+render(); updateBag();
+
+/* ===== Envío de pedido por correo (sin backend) ===== */
+orderForm.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const entries = Object.entries(bag);
+  if(entries.length===0){ alert('Tu canasta está vacía. Agrega productos antes de enviar.'); return; }
+  const form = new FormData(orderForm);
+  const datos = {
+    nombre: form.get('nombre'),
+    telefono: form.get('telefono'),
+    provincia: form.get('provincia')||'',
+    direccion: form.get('direccion')||'',
+    pago: form.get('pago')
+  };
+  const lines = entries.map(([id,qty])=>{
+    const p=CATALOG.find(x=>x.id===id);
+    return `- ${p.name} (${p.brand}) x${qty} — ${money(p.price*qty)}`
+  }).join('%0A');
+  const total = entries.reduce((s,[id,qty])=>{const p=CATALOG.find(x=>x.id===id); return s+p.price*qty;},0);
+  const asunto = encodeURIComponent('Pedido GreenSkin (web)');
+  const cuerpo = `Hola GreenSkin,%0A%0AQuiero realizar este pedido:%0A${lines}%0A%0ATotal: ${money(total)}%0A%0ADatos del cliente:%0ANombre: ${encodeURIComponent(datos.nombre)}%0ATeléfono: ${encodeURIComponent(datos.telefono)}%0AProvincia/Área: ${encodeURIComponent(datos.provincia)}%0ADirección: ${encodeURIComponent(datos.direccion)}%0AMétodo de pago: ${encodeURIComponent(datos.pago)}%0A%0AEnvío por Correos de CR o entrega GAM por Uber Flash.`;
+  window.location.href = `mailto:dayaquesada.31@gmail.com?subject=${asunto}&body=${cuerpo}`;
+});
+
+/* Compartir por WhatsApp */
+shareWA.addEventListener('click', ()=>{
+  const entries = Object.entries(bag);
+  if(entries.length===0){ alert('Tu canasta está vacía.'); return; }
+  const lines = entries.map(([id,qty])=>{
+    const p=CATALOG.find(x=>x.id===id);
+    return `• ${p.name} (${p.brand}) x${qty}`
+  }).join('%0A');
+  const total = entries.reduce((s,[id,qty])=>{const p=CATALOG.find(x=>x.id===id); return s+p.price*qty;},0);
+  const msg = `Hola, vengo de la web GreenSkin.%0AQuiero este pedido:%0A${lines}%0ATotal aprox: ${money(total)}%0APago por Transferencia o SINPE Móvil. ¿Me ayudan a coordinar el envío?`;
+  window.open(`https://wa.me/50686434830?text=${msg}`, '_blank');
+});
+</script>
+</body>
+</html>
