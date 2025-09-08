@@ -134,7 +134,9 @@
       padding:12px 14px;
       padding-bottom:calc(14px + var(--safe-bottom));
     }
-    .line{display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px dashed #e5e7eb;padding:10px 0}
+    /* Línea de producto con imagen */
+    .line{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:10px 0}
+    .thumb{width:54px;height:54px;border-radius:10px;object-fit:cover;border:1px solid var(--border)}
     .qty{display:flex;align-items:center;gap:8px}
     .qty button{width:28px;height:28px;border:1px solid var(--border);border-radius:8px;background:#fff;cursor:pointer}
     .checkout{
@@ -143,34 +145,26 @@
     }
     .checkout form{display:grid;gap:10px}
     .note{font-size:13px;color:var(--muted)}
+    .steps{margin:8px 0 2px;padding-left:18px;color:#374151;font-size:13px}
+    .steps li{margin:2px 0}
 
-    /* ===== FOOTER NUEVO ===== */
-    footer{margin-top:30px;background:var(--accent);color:#f0fdf4}
+    /* ===== FOOTER nuevo (verde claro como suscripción) ===== */
+    footer{margin-top:30px;background:var(--accent-2);color:#064e3b;border-top:1px solid #c7ead8}
     .footer-wrap{
       max-width:1200px;margin:0 auto;padding:28px 14px;display:grid;grid-template-columns:2fr 1.2fr 1.2fr;gap:22px;
     }
-    .footer-col h4{margin:0 0 10px;font-size:16px;font-weight:800;color:#ffffff}
-    .footer-col p,.footer-col a,.footer-col li{font-size:14px;color:#e7f7ee}
-    .footer-col a{border-bottom:1px dotted rgba(255,255,255,.25)}
+    .footer-col h4{margin:0 0 10px;font-size:16px;font-weight:800;color:#065f46}
+    .footer-col p,.footer-col a,.footer-col li{font-size:14px;color:#0b3f2e}
+    .footer-col a{border-bottom:1px dotted rgba(6,95,70,.35)}
     .footer-col a:hover{border-bottom-color:transparent;opacity:.95}
     .footer-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
     .footer-brand{display:flex;flex-direction:column;gap:8px}
     .footer-brand strong{font-size:18px;letter-spacing:.3px}
-    .footer-note{opacity:.9}
-    .footer-bottom{
-      border-top:1px solid rgba(255,255,255,.18);
-      margin-top:6px
-    }
+    .footer-bottom{border-top:1px solid #c7ead8;background:rgba(255,255,255,.35)}
     .footer-bottom .inner{
-      max-width:1200px;margin:0 auto;padding:14px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;color:#e7f7ee;font-size:13px
+      max-width:1200px;margin:0 auto;padding:14px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;color:#064e3b;font-size:13px
     }
-    .footer-bottom a{color:#ffffff}
-    @media (max-width:900px){
-      .footer-wrap{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width:600px){
-      .footer-wrap{grid-template-columns:1fr}
-    }
+    .footer-bottom a{color:#065f46}
 
     /* Newsletter */
     .newsletter{max-width:1200px;margin:16px auto 0;padding:0 14px}
@@ -200,11 +194,12 @@
     .fab-wa svg{fill:#053b1c}
     .fab-ig{background: radial-gradient(120% 120% at 30% 110%, #feda75 0,#fa7e1e 35%,#d62976 70%,#962fbf 90%);border:0}
 
-    /* Responsivo Header/Hero/Newsletter */
+    /* Responsivo */
     @media (max-width:900px){
       .hero{grid-template-columns:1fr}
       .brand img{height:40px}
       .carousel img{aspect-ratio:16/11}
+      .footer-wrap{grid-template-columns:1fr 1fr}
     }
     @media (max-width:800px){
       .nav{flex-wrap:wrap}
@@ -213,6 +208,9 @@
       .actions{order:1}
       .newsletter .newsletter-wrap{grid-template-columns:1fr;gap:10px}
       .newsletter .controls{flex-direction:column;align-items:stretch}
+    }
+    @media (max-width:600px){
+      .footer-wrap{grid-template-columns:1fr}
     }
     @media (max-width:520px){
       .carousel img{aspect-ratio:16/12}
@@ -340,6 +338,13 @@
     <div class="checkout">
       <form id="orderForm">
         <strong>Datos para el pedido</strong>
+
+        <ul class="steps">
+          <li>Armá tu pedido y revisá cantidades.</li>
+          <li>Pagá por transferencia o SINPE Móvil.</li>
+          <li>Enviá el comprobante por WhatsApp para confirmar.</li>
+        </ul>
+
         <input name="nombre" required placeholder="Nombre y apellidos" />
         <input name="telefono" required placeholder="Teléfono / WhatsApp (+506)" />
         <input name="provincia" placeholder="Provincia, cantón, distrito" />
@@ -354,13 +359,17 @@
         </p>
 
         <p class="note">* No cobramos en el sitio. Te contactaremos para confirmar el pedido y coordinar el <strong>envío por Correos de Costa Rica</strong> o la <strong>entrega en la GAM por Uber Flash</strong>.</p>
-        <button class="tab btn" type="submit">Enviar pedido por correo</button>
-        <button class="tab" type="button" id="shareWA">Compartir por WhatsApp</button>
+
+        <!-- Botones -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="tab btn" type="button" id="keepShopping">Seguir comprando</button>
+          <button class="tab btn" type="button" id="shareWA">Enviar pedido por WhatsApp</button>
+        </div>
       </form>
     </div>
   </aside>
 
-  <!-- ===== Footer profesional ===== -->
+  <!-- ===== Footer profesional (verde claro) ===== -->
   <footer>
     <div class="footer-wrap">
       <div class="footer-col footer-brand">
@@ -458,8 +467,14 @@ function updateBag(){
   const list = entries.map(([id,qty])=>{
     const p = CATALOG.find(x=>x.id===id);
     return `<div class="line">
-      <div><strong>${p.name}</strong><div class="alt">${p.brand}</div></div>
-      <div class="qty"><button onclick="removeFromBag('${id}')">-</button><span>${qty}</span><button onclick="addToBag('${id}')">+</button></div>
+      <img class="thumb" src="${p.img}" alt="${p.alt}"/>
+      <div>
+        <strong>${p.name}</strong>
+        <div class="alt">${p.brand}</div>
+        <div class="qty" style="margin-top:6px">
+          <button onclick="removeFromBag('${id}')">-</button><span>${qty}</span><button onclick="addToBag('${id}')">+</button>
+        </div>
+      </div>
       <div>${money(p.price*qty)}</div>
     </div>`;
   }).join('');
@@ -592,30 +607,12 @@ document.querySelectorAll('input[name="pago"]').forEach(r => {
   });
 });
 
-/* ===== Envío de pedido por correo ===== */
-orderForm.addEventListener('submit', (e)=>{
-  e.preventDefault();
-  const entries = Object.entries(bag);
-  if(entries.length===0){ alert('Tu canasta está vacía. Agrega productos antes de enviar.'); return; }
-  const form = new FormData(orderForm);
-  const datos = {
-    nombre: form.get('nombre'),
-    telefono: form.get('telefono'),
-    provincia: form.get('provincia')||'',
-    direccion: form.get('direccion')||'',
-    pago: form.get('pago')
-  };
-  const lines = entries.map(([id,qty])=>{
-    const p=CATALOG.find(x=>x.id===id);
-    return `- ${p.name} (${p.brand}) x${qty} — ${money(p.price*qty)}`
-  }).join('%0A');
-  const total = entries.reduce((s,[id,qty])=>{const p=CATALOG.find(x=>x.id===id); return s+p.price*qty;},0);
-  const asunto = encodeURIComponent('Pedido GreenSkin (web)');
-  const cuerpo = `Hola GreenSkin,%0A%0AQuiero realizar este pedido:%0A${lines}%0A%0ATotal: ${money(total)}%0A%0ADatos del cliente:%0ANombre: ${encodeURIComponent(datos.nombre)}%0ATeléfono: ${encodeURIComponent(datos.telefono)}%0AProvincia/Área: ${encodeURIComponent(datos.provincia)}%0ADirección: ${encodeURIComponent(datos.direccion)}%0AMétodo de pago: ${encodeURIComponent(datos.pago)}%0A%0ABeneficiario del pago: Dayana Gabriela Quesada Porras.%0A%0AEnvío por Correos de CR o entrega GAM por Uber Flash.`;
-  window.location.href = `mailto:admin@greenskin.com?subject=${asunto}&body=${cuerpo}`;
+/* ===== Envío por WhatsApp ===== */
+document.getElementById('keepShopping')?.addEventListener('click', ()=>{
+  closeDrawer();
+  document.getElementById('grid')?.scrollIntoView({behavior:'smooth'});
 });
 
-/* Compartir por WhatsApp */
 shareWA.addEventListener('click', ()=>{
   const entries = Object.entries(bag);
   if(entries.length===0){ alert('Tu canasta está vacía.'); return; }
@@ -625,7 +622,7 @@ shareWA.addEventListener('click', ()=>{
   }).join('%0A');
   const total = entries.reduce((s,[id,qty])=>{const p=CATALOG.find(x=>x.id===id); return s+p.price*qty;},0);
   const pagoSel = document.querySelector('input[name="pago"]:checked')?.value || 'Transferencia bancaria';
-  const msg = `Hola, vengo de la web GreenSkin.%0AQuiero este pedido:%0A${lines}%0ATotal aprox: ${money(total)}%0AMétodo de pago: ${pagoSel} (beneficiario: Dayana Gabriela Quesada Porras).%0A¿Me ayudan a coordinar el envío?`;
+  const msg = `Hola, vengo de la web GreenSkin.%0AQuiero este pedido:%0A${lines}%0ATotal aprox: ${money(total)}%0AMétodo de pago: ${pagoSel} (beneficiario: Dayana Gabriela Quesada Porras).%0AAdjunto comprobante para confirmar el pedido.%0A¿Me ayudan a coordinar el envío?`;
   window.open(`https://wa.me/50686434830?text=${msg}`, '_blank');
 });
 
