@@ -84,7 +84,7 @@
     /* Canasta (drawer) */
     .drawer{position:fixed;inset:0 0 0 auto;width:min(460px,92vw);background:#fff;border-left:1px solid var(--border);box-shadow: -20px 0 40px rgba(0,0,0,.12);transform:translateX(100%);transition:.25s;z-index:70;display:flex;flex-direction:column}
     .drawer.open{transform:translateX(0)}
-    .drawer header{position:sticky;top:0;border-bottom:1px solid var(--border);padding:16px 18px;font-weight:800;display:flex;align-items:center;justify-content:space-between}
+    .drawer header{position:sticky;top:0;border-bottom:1px solid var(--border);padding:16px 18px;font-weight:800}
     .drawer .content{padding:14px 18px;flex:1;overflow:auto}
     .line{display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px dashed #e5e7eb;padding:10px 0}
     .qty{display:flex;align-items:center;gap:8px}
@@ -92,10 +92,6 @@
     .checkout{border-top:1px solid var(--border);padding:14px 18px}
     .checkout form{display:grid;gap:10px}
     .note{font-size:13px;color:var(--muted)}
-
-    /* Backdrop (fondo oscuro al abrir canasta) */
-    .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.25s;z-index:60}
-    .backdrop.show{opacity:1;pointer-events:auto}
 
     /* Footer */
     footer{margin-top:30px;border-top:1px solid var(--border);background:#fff}
@@ -171,14 +167,9 @@
   <!-- GRID DE PRODUCTOS -->
   <section class="grid" id="productGrid" aria-live="polite"></section>
 
-  <!-- BACKDROP & CANASTA -->
-  <div id="backdrop" class="backdrop" aria-hidden="true"></div>
+  <!-- CANASTA -->
   <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Canasta de productos">
-    <header>
-      <span>Tu Canasta</span>
-      <!-- CERRAR CANASTA -->
-      <button id="closeBag" class="btn" style="padding:6px 10px;border-radius:10px;">✕ Cerrar</button>
-    </header>
+    <header>Tu Canasta</header>
     <div class="content">
       <div id="bagLines"></div>
     </div>
@@ -227,9 +218,7 @@ const grid = document.getElementById('productGrid');
 const tabs = document.querySelectorAll('.tab');
 const searchInput = document.getElementById('q');
 const drawer = document.getElementById('drawer');
-const backdrop = document.getElementById('backdrop');          // BACKDROP
 const openBagBtn = document.getElementById('openBag');
-const closeBagBtn = document.getElementById('closeBag');        // BOTÓN CERRAR
 const bagCount = document.getElementById('bagCount');
 const bagLines = document.getElementById('bagLines');
 const orderForm = document.getElementById('orderForm');
@@ -237,7 +226,6 @@ const shareWA = document.getElementById('shareWA');
 
 let currentTab = 'skincare';
 let bag = {}; // {id: qty}
-let bagPushedToHistory = false;                                  // HISTORIA
 
 function money(v){ return '₡'+v.toLocaleString('es-CR'); }
 
@@ -288,39 +276,11 @@ function updateBag(){
   }
 }
 
-/* ------- Abrir/Cerrar canasta con historial y backdrop ------- */
-function openDrawer(){
-  drawer.classList.add('open');
-  backdrop.classList.add('show');                 // mostrar fondo
-  drawer.setAttribute('aria-hidden','false');
-  // Empujar un estado al historial para que el botón atrás cierre
-  history.pushState({bag:true}, '', window.location.href);
-  bagPushedToHistory = true;
-}
-function closeDrawer(useHistoryBack=true){
-  drawer.classList.remove('open');
-  backdrop.classList.remove('show');              // ocultar fondo
-  drawer.setAttribute('aria-hidden','true');
-  // Si abrimos la canasta con pushState, hacemos back una vez
-  if(useHistoryBack && bagPushedToHistory){
-    bagPushedToHistory = false;
-    // Evita bucle: si no hay estado anterior, no pasa nada
-    if (history.state && history.state.bag) history.back();
-  }
-}
+function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
+function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
 
 openBagBtn.addEventListener('click', openDrawer);
-document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(false); });
-backdrop.addEventListener('click', ()=>closeDrawer());          // clic fuera cierra
-closeBagBtn.addEventListener('click', ()=>closeDrawer());       // botón ✕
-
-/* Al presionar Atrás del navegador, cerrar si está abierta */
-window.addEventListener('popstate', (e)=>{
-  if(drawer.classList.contains('open')){
-    // Cerrar sin volver a tocar history.back() para no ir más atrás
-    closeDrawer(false);
-  }
-});
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(); });
 
 /* Tabs visuales */
 for(const t of tabs){
@@ -353,7 +313,6 @@ try{ const saved = localStorage.getItem('greenskin_bag'); if(saved) bag = JSON.p
 render(); updateBag();
 
 /* ===== Envío de pedido por correo (sin backend) ===== */
-const orderForm = document.getElementById('orderForm');
 orderForm.addEventListener('submit', (e)=>{
   e.preventDefault();
   const entries = Object.entries(bag);
@@ -377,7 +336,6 @@ orderForm.addEventListener('submit', (e)=>{
 });
 
 /* Compartir por WhatsApp */
-const shareWA = document.getElementById('shareWA');
 shareWA.addEventListener('click', ()=>{
   const entries = Object.entries(bag);
   if(entries.length===0){ alert('Tu canasta está vacía.'); return; }
