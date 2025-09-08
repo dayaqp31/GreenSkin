@@ -81,10 +81,14 @@
     .add{margin:10px 12px 14px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#f8fafc;cursor:pointer}
     .add:hover{background:#eef2f7}
 
+    /* Backdrop (fondo oscuro al abrir canasta) */
+    .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.25s;z-index:60}
+    .backdrop.show{opacity:1;pointer-events:auto}
+
     /* Canasta (drawer) */
-    .drawer{position:fixed;inset:0 0 0 auto;width:min(460px,92vw);background:#fff;border-left:1px solid var(--border);box-shadow: -20px 0 40px rgba(0,0,0,.12);transform:translateX(100%);transition:.25s;z-index:70;display:flex;flex-direction:column}
+    .drawer{position:fixed;inset:0 0 0 auto;width:min(460px,92vw);background:#fff;border-left:1px solid var(--border);box-shadow:-20px 0 40px rgba(0,0,0,.12);transform:translateX(100%);transition:.25s;z-index:70;display:flex;flex-direction:column}
     .drawer.open{transform:translateX(0)}
-    .drawer header{position:sticky;top:0;border-bottom:1px solid var(--border);padding:16px 18px;font-weight:800}
+    .drawer header{position:sticky;top:0;border-bottom:1px solid var(--border);padding:16px 18px;font-weight:800;display:flex;align-items:center;justify-content:space-between;background:#fff}
     .drawer .content{padding:14px 18px;flex:1;overflow:auto}
     .line{display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px dashed #e5e7eb;padding:10px 0}
     .qty{display:flex;align-items:center;gap:8px}
@@ -167,9 +171,14 @@
   <!-- GRID DE PRODUCTOS -->
   <section class="grid" id="productGrid" aria-live="polite"></section>
 
-  <!-- CANASTA -->
+  <!-- Backdrop y Canasta -->
+  <div id="backdrop" class="backdrop" aria-hidden="true"></div> <!-- Backdrop -->
   <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Canasta de productos">
-    <header>Tu Canasta</header>
+    <header>
+      <span>Tu Canasta</span>
+      <!-- Botón cerrar -->
+      <button id="closeBag" class="btn" style="padding:6px 10px;border-radius:10px;">✕ Cerrar</button>
+    </header>
     <div class="content">
       <div id="bagLines"></div>
     </div>
@@ -218,7 +227,9 @@ const grid = document.getElementById('productGrid');
 const tabs = document.querySelectorAll('.tab');
 const searchInput = document.getElementById('q');
 const drawer = document.getElementById('drawer');
+const backdrop = document.getElementById('backdrop');          // Backdrop
 const openBagBtn = document.getElementById('openBag');
+const closeBagBtn = document.getElementById('closeBag');        // Botón cerrar
 const bagCount = document.getElementById('bagCount');
 const bagLines = document.getElementById('bagLines');
 const orderForm = document.getElementById('orderForm');
@@ -226,6 +237,7 @@ const shareWA = document.getElementById('shareWA');
 
 let currentTab = 'skincare';
 let bag = {}; // {id: qty}
+let bagPushedToHistory = false;                                  // historial
 
 function money(v){ return '₡'+v.toLocaleString('es-CR'); }
 
@@ -276,11 +288,35 @@ function updateBag(){
   }
 }
 
-function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
-function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+/* ------- Abrir/Cerrar canasta con historial y backdrop ------- */
+function openDrawer(){
+  drawer.classList.add('open');
+  backdrop.classList.add('show');                 // mostrar fondo
+  drawer.setAttribute('aria-hidden','false');
+  history.pushState({bag:true}, '', window.location.href); // historial
+  bagPushedToHistory = true;
+}
+function closeDrawer(useHistoryBack=true){
+  drawer.classList.remove('open');
+  backdrop.classList.remove('show');              // ocultar fondo
+  drawer.setAttribute('aria-hidden','true');
+  if(useHistoryBack && bagPushedToHistory){
+    bagPushedToHistory = false;
+    if(history.state && history.state.bag) history.back();
+  }
+}
 
 openBagBtn.addEventListener('click', openDrawer);
-document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(); });
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(false); });
+backdrop.addEventListener('click', ()=>closeDrawer());          // clic fuera cierra
+closeBagBtn.addEventListener('click', ()=>closeDrawer());       // botón ✕
+
+/* Al presionar Atrás del navegador, cerrar si está abierta */
+window.addEventListener('popstate', ()=>{
+  if(drawer.classList.contains('open')){
+    closeDrawer(false); // cerrar sin llamar history.back() otra vez
+  }
+});
 
 /* Tabs visuales */
 for(const t of tabs){
