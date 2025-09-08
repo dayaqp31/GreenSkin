@@ -110,18 +110,19 @@
     <nav class="nav">
       <div class="brand">
         <!-- Reemplazá el src por la ruta real de tu logo -->
-        <img src="ChatGPT Image 7 sept 2025, 21_40_55.png" alt="Logo GreenSkin" />
+        <img src="img/greenskin-logo.png" alt="Logo GreenSkin" />
         <a href="#">GreenSkin</a>
       </div>
 
       <div class="search" role="search">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="#6b7280" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5M9.5 14A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14"/></svg>
-        <input id="q" type="search" placeholder="Buscar: Perfume Bath & Body Works, Skin Care Coreano Costa Rica…" aria-label="Buscar productos" />
+        <input id="q" type="search" placeholder="Buscar: Perfume Bath & Body Works Costa Rica…"
+               aria-label="Buscar productos" />
       </div>
 
       <div class="menu" aria-label="Categorías">
         <div class="item">
-          <a href="#" class="active" data-tab="skincare">Skin Care ▾</a>
+          <a href="#" data-tab="skincare">Skin Care ▾</a>
           <div class="submenu">
             <a href="#" data-tab="skincare" data-query="Limpiador|Cleanser">Limpiadores Faciales</a>
             <a href="#" data-tab="skincare" data-query="Toner|Tónico|Heartleaf">Tónicos</a>
@@ -133,7 +134,7 @@
           </div>
         </div>
         <div class="item">
-          <a href="#" data-tab="perfumes">Perfumes ▾</a>
+          <a href="#" class="active" data-tab="perfumes">Perfumes ▾</a>
           <div class="submenu">
             <a href="#" data-tab="perfumes" data-query="Splash|Mist">Splashes</a>
           </div>
@@ -150,33 +151,33 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-card">
-      <h1>Perfumes Originales y Skin Care Coreano de las mejores marcas, ahora en Costa Rica. ¡Tu rutina de belleza te espera!</h1>
-      <p>Marcas coreanas: <strong>Skin1004</strong>, <strong>Mixsoon</strong>, <strong>Aqua</strong> y <strong>Anua</strong>. Fragancias <strong>Bath & Body Works</strong> desde <strong>₡15.900</strong>.</p>
+      <h1>Perfumes Originales Bath & Body Works en Costa Rica. ¡Elegí tu fragancia favorita!</h1>
+      <p>Disponibles ahora: <strong>Gorgeous</strong>, <strong>Butterfly</strong> y <strong>Sweetest Song</strong>. Precio: <strong>₡15.900</strong> c/u.</p>
       <div class="cta">
-        <a href="#grid" class="btn btn-solid">Ver productos coreanos</a>
-        <a href="#grid" class="btn">Explorar perfumes en Costa Rica</a>
+        <a href="#grid" class="btn btn-solid">Ver fragancias disponibles</a>
+        <a href="#grid" class="btn">Añadir a la canasta</a>
       </div>
     </div>
-    <img src="https://images.unsplash.com/photo-1600180758890-6b94519a8baa?q=80&w=1200&auto=format&fit=crop" alt="Composición de productos de skin care en fondo blanco con hojas verdes" loading="lazy" style="border-radius: var(--radius); border:1px solid var(--border); box-shadow: var(--shadow);" />
+    <img src="img/hero-perfumes.jpg" alt="Fragancias Bath & Body Works sobre fondo blanco y hojas verdes"
+         loading="lazy" style="border-radius: var(--radius); border:1px solid var(--border); box-shadow: var(--shadow);" />
   </section>
 
   <!-- TABS VISUALES -->
   <section class="tabs" id="grid">
     <div class="tablist">
-      <button class="tab" aria-selected="true" data-tab="skincare">Skin Care</button>
-      <button class="tab" aria-selected="false" data-tab="perfumes">Perfumes</button>
+      <button class="tab" aria-selected="false" data-tab="skincare">Skin Care</button>
+      <button class="tab" aria-selected="true" data-tab="perfumes">Perfumes</button>
     </div>
   </section>
 
-  <!-- GRID DE PRODUCTOS -->
+  <!-- GRID DE PRODUCTOS (portada con tus 3) -->
   <section class="grid" id="productGrid" aria-live="polite"></section>
 
   <!-- Backdrop y Canasta -->
-  <div id="backdrop" class="backdrop" aria-hidden="true"></div> <!-- Backdrop -->
+  <div id="backdrop" class="backdrop" aria-hidden="true"></div>
   <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Canasta de productos">
     <header>
       <span>Tu Canasta</span>
-      <!-- Botón cerrar -->
       <button id="closeBag" class="btn" style="padding:6px 10px;border-radius:10px;">✕ Cerrar</button>
     </header>
     <div class="content">
@@ -210,34 +211,28 @@
   </footer>
 
 <script>
-/* ===== Catálogo (editá/añadí líneas) ===== */
+/* ===== Catálogo (solo 3 splashes actuales) ===== */
 const CATALOG = [
-  // Skin Care Coreano
-  {id:'sk1004-amp-centella', tab:'skincare', brand:'Skin1004', name:"Ampolla Centella Asiatica", price:18900, img:'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?q=80&w=1200&auto=format&fit=crop', alt:'Foto de la ampolla Centella Asiatica Skin1004 para piel sensible'},
-  {id:'mixsoon-essence', tab:'skincare', brand:'Mixsoon', name:"Essence Bean", price:21500, img:'https://images.unsplash.com/photo-1611937622368-1fbc3b8a9cfe?q=80&w=1200&auto=format&fit=crop', alt:'Essence Mixsoon Bean para hidratación profunda'},
-  {id:'anua-toner', tab:'skincare', brand:'Anua', name:"Heartleaf 77% Soothing Toner", price:22900, img:'https://images.unsplash.com/photo-1611930021931-61b1183f5b2d?q=80&w=1200&auto=format&fit=crop', alt:'Toner Anua Heartleaf calmante'},
-  {id:'aqua-cleanser', tab:'skincare', brand:'Aqua', name:"Foam Cleanser", price:14500, img:'https://images.unsplash.com/photo-1585237001960-6fa7b3b4c06b?q=80&w=1200&auto=format&fit=crop', alt:'Limpiador facial Aqua en espuma'},
-
-  // Perfumes / Splashes Bath & Body Works
-  {id:'bbw-gingham', tab:'perfumes', brand:'Bath & Body Works', name:"Splash Gingham Gorgeous", price:15900, img:'https://images.unsplash.com/photo-1585386959984-a41552231681?q=80&w=1200&auto=format&fit=crop', alt:'Splash Gingham Gorgeous Bath & Body Works Costa Rica'},
-  {id:'bbw-japanese', tab:'perfumes', brand:'Bath & Body Works', name:"Japanese Cherry Blossom", price:15900, img:'https://images.unsplash.com/photo-1585386958264-491df9a4e19b?q=80&w=1200&auto=format&fit=crop', alt:'Splash Japanese Cherry Blossom Bath & Body Works'}
+  {id:'bbw-gorgeous', tab:'perfumes', brand:'Bath & Body Works', name:"Gorgeous (Splash)", price:15900, img:'img/bbw-gorgeous.jpg', alt:'Splash Bath & Body Works Gorgeous'},
+  {id:'bbw-butterfly', tab:'perfumes', brand:'Bath & Body Works', name:"Butterfly (Splash)", price:15900, img:'img/bbw-butterfly.jpg', alt:'Splash Bath & Body Works Butterfly'},
+  {id:'bbw-sweetest-song', tab:'perfumes', brand:'Bath & Body Works', name:"Sweetest Song (Splash)", price:15900, img:'img/bbw-sweetest-song.jpg', alt:'Splash Bath & Body Works Sweetest Song'}
 ];
 
 const grid = document.getElementById('productGrid');
 const tabs = document.querySelectorAll('.tab');
 const searchInput = document.getElementById('q');
 const drawer = document.getElementById('drawer');
-const backdrop = document.getElementById('backdrop');          // Backdrop
+const backdrop = document.getElementById('backdrop');
 const openBagBtn = document.getElementById('openBag');
-const closeBagBtn = document.getElementById('closeBag');        // Botón cerrar
+const closeBagBtn = document.getElementById('closeBag');
 const bagCount = document.getElementById('bagCount');
 const bagLines = document.getElementById('bagLines');
 const orderForm = document.getElementById('orderForm');
 const shareWA = document.getElementById('shareWA');
 
-let currentTab = 'skincare';
+let currentTab = 'perfumes';  // Mostrar perfumes en portada
 let bag = {}; // {id: qty}
-let bagPushedToHistory = false;                                  // historial
+let bagPushedToHistory = false;
 
 function money(v){ return '₡'+v.toLocaleString('es-CR'); }
 
@@ -291,14 +286,14 @@ function updateBag(){
 /* ------- Abrir/Cerrar canasta con historial y backdrop ------- */
 function openDrawer(){
   drawer.classList.add('open');
-  backdrop.classList.add('show');                 // mostrar fondo
+  backdrop.classList.add('show');
   drawer.setAttribute('aria-hidden','false');
-  history.pushState({bag:true}, '', window.location.href); // historial
+  history.pushState({bag:true}, '', window.location.href);
   bagPushedToHistory = true;
 }
 function closeDrawer(useHistoryBack=true){
   drawer.classList.remove('open');
-  backdrop.classList.remove('show');              // ocultar fondo
+  backdrop.classList.remove('show');
   drawer.setAttribute('aria-hidden','true');
   if(useHistoryBack && bagPushedToHistory){
     bagPushedToHistory = false;
@@ -308,13 +303,13 @@ function closeDrawer(useHistoryBack=true){
 
 openBagBtn.addEventListener('click', openDrawer);
 document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(false); });
-backdrop.addEventListener('click', ()=>closeDrawer());          // clic fuera cierra
-closeBagBtn.addEventListener('click', ()=>closeDrawer());       // botón ✕
+backdrop.addEventListener('click', ()=>closeDrawer());
+closeBagBtn.addEventListener('click', ()=>closeDrawer());
 
-/* Al presionar Atrás del navegador, cerrar si está abierta */
+/* Atrás del navegador cierra la canasta si está abierta */
 window.addEventListener('popstate', ()=>{
   if(drawer.classList.contains('open')){
-    closeDrawer(false); // cerrar sin llamar history.back() otra vez
+    closeDrawer(false);
   }
 });
 
