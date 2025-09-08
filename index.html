@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>GreenSkin | Perfumes y Skin Care Coreano en Costa Rica</title>
-  <meta name="description" content="GreenSkin: Perfumes Bath & Body Works (₡15.900). Envíos por Correos de Costa Rica y entregas en la GAM por Uber Flash. Pago por transferencia o SINPE Móvil." />
-  <meta property="og:title" content="GreenSkin | Perfumes y Skin Care Coreano en Costa Rica" />
+  <title>GreenSkin | Perfumes Bath & Body Works en Costa Rica</title>
+  <meta name="description" content="Perfumes Bath & Body Works (₡15.900). Envíos por Correos de Costa Rica y entregas en la GAM por Uber Flash. Pago por transferencia o SINPE Móvil." />
+  <meta property="og:title" content="GreenSkin | Perfumes Bath & Body Works en Costa Rica" />
   <meta property="og:description" content="Perfumes originales Bath & Body Works. Envíos a todo Costa Rica y entregas en la GAM. Paga por transferencia o SINPE Móvil." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_CR" />
@@ -24,7 +24,7 @@
     img{max-width:100%;display:block}
     button,input,textarea{font:inherit}
 
-    /* Fondo */
+    /* Fondo suave */
     body::before{
       content:""; position:fixed; inset:0; pointer-events:none; opacity:.18;
       background:
@@ -40,14 +40,14 @@
       padding:8px 16px;background:var(--accent-2);color:#065f46;font-weight:600;
       text-align:center;text-wrap:balance;word-break:keep-all
     }
-    /* Evita que se pegue al strong en móviles */
-    .topbar strong{margin-left:.3em;}
+    .topbar strong{margin-left:4px} /* evita que se pegue el texto al <strong> */
     @media (max-width:380px){ .topbar{font-size:12px;padding:6px 10px} }
 
     header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--border)}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;max-width:1200px;margin:0 auto}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;min-width:0}
     .brand img{height:46px;flex-shrink:0}
+
     .menu{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
     .menu a{padding:8px 12px;border-radius:999px}
     .menu a.active, .menu a:hover{background:#f3f4f6}
@@ -62,17 +62,17 @@
     .search input{border:0;background:transparent;outline:none;width:100%}
     .actions{display:flex;gap:8px;flex-shrink:0}
 
-    /* Botón moderno de bolsa */
+    /* Botón Bolsa moderno */
     .bag-btn{
       position:relative;display:inline-flex;align-items:center;justify-content:center;
-      width:44px;height:44px;border-radius:12px;border:1px solid var(--border);background:#fff;
-      cursor:pointer;transition:.2s;box-shadow:0 2px 0 rgba(0,0,0,.03)
+      gap:8px;border:1px solid var(--border);padding:10px 14px;border-radius:999px;background:#fff;cursor:pointer;transition:.2s
     }
-    .bag-btn svg{width:22px;height:22px;fill:none;stroke:#111;stroke-width:1.8}
     .bag-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
-    .bag-badge{
-      position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;
-      background:#ef4444;color:#fff;font-size:12px;display:none;align-items:center;justify-content:center;border:2px solid #fff
+    .bag-icon{width:22px;height:22px;display:block}
+    #bagCount{
+      position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;padding:0 6px;
+      display:none;align-items:center;justify-content:center;
+      background:#ef4444;color:#fff;border-radius:999px;font-size:12px;font-weight:700;line-height:20px
     }
 
     /* Hero */
@@ -80,7 +80,6 @@
     .hero-card{background:linear-gradient(180deg,#ffffff,#f7fffb);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
     .hero h1{font-size:clamp(24px,5vw,40px);line-height:1.15;margin:0 0 10px}
     .hero p{color:var(--muted);margin:0 0 16px}
-    .cta{display:flex;gap:10px;flex-wrap:wrap}
 
     /* Tabs */
     .tabs{max-width:1200px;margin:10px auto 0;padding:0 14px}
@@ -104,15 +103,29 @@
     .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.25s;z-index:60}
     .backdrop.show{opacity:1;pointer-events:auto}
 
-    /* Canasta (drawer) */
-    .drawer{position:fixed;inset:0 0 0 auto;width:min(460px,92vw);background:#fff;border-left:1px solid var(--border);box-shadow:-20px 0 40px rgba(0,0,0,.12);transform:translateX(100%);transition:.25s;z-index:70;display:flex;flex-direction:column}
+    /* Drawer – altura real móvil + contenido con scroll + checkout sticky */
+    .drawer{
+      position:fixed;inset:0 0 0 auto;width:min(460px,92vw);
+      background:#fff;border-left:1px solid var(--border);
+      box-shadow:-20px 0 40px rgba(0,0,0,.12);
+      transform:translateX(100%);transition:.25s;z-index:70;
+      display:flex;flex-direction:column;
+      height:100dvh;max-height:100svh;height:-webkit-fill-available;
+    }
     .drawer.open{transform:translateX(0)}
     .drawer header{position:sticky;top:0;border-bottom:1px solid var(--border);padding:14px 14px;font-weight:800;display:flex;align-items:center;justify-content:space-between;background:#fff}
-    .drawer .content{padding:12px 14px;flex:1;overflow:auto}
+    .drawer .content{
+      flex:1;overflow:auto;-webkit-overflow-scrolling:touch;
+      padding:12px 14px;
+      padding-bottom:calc(14px + var(--safe-bottom));
+    }
     .line{display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px dashed #e5e7eb;padding:10px 0}
     .qty{display:flex;align-items:center;gap:8px}
     .qty button{width:28px;height:28px;border:1px solid var(--border);border-radius:8px;background:#fff;cursor:pointer}
-    .checkout{border-top:1px solid var(--border);padding:14px}
+    .checkout{
+      position:sticky;bottom:0;background:#fff;border-top:1px solid var(--border);
+      padding:14px;padding-bottom:calc(14px + var(--safe-bottom));
+    }
     .checkout form{display:grid;gap:10px}
     .note{font-size:13px;color:var(--muted)}
 
@@ -141,32 +154,16 @@
     .newsletter .err{color:#b91c1c;margin-top:8px}
     .newsletter .hidden{display:none}
 
-    /* Floating Action Buttons (WhatsApp / Instagram) — más pequeños */
-    .fabs{
-      position:fixed;right:calc(12px + var(--safe-right));bottom:calc(12px + var(--safe-bottom));
-      display:flex;flex-direction:column;gap:10px;z-index:80
-    }
-    .fab{
-      width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;
-      box-shadow:0 10px 18px rgba(0,0,0,.15); border:1px solid var(--border); background:#fff
-    }
-    .fab svg{width:22px;height:22px;display:block}
+    /* Floating buttons (más pequeños) */
+    .fabs{position:fixed;right:calc(14px + var(--safe-right));bottom:calc(14px + var(--safe-bottom));display:flex;flex-direction:column;gap:10px;z-index:80}
+    .fab{width:46px;height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 24px rgba(0,0,0,.18); border:1px solid var(--border); background:#fff}
+    .fab svg{width:24px;height:24px;display:block}
     .fab-wa{background:#25d366;border-color:#1fb655}
     .fab-wa svg{fill:#053b1c}
-    .fab-ig{
-      background: radial-gradient(120% 120% at 30% 110%, #feda75 0,#fa7e1e 35%,#d62976 70%,#962fbf 90%);
-      border:0;
-    }
-    @media (max-width:480px){
-      .fab{width:42px;height:42px}
-      .fab svg{width:20px;height:20px}
-    }
+    .fab-ig{background: radial-gradient(120% 120% at 30% 110%, #feda75 0,#fa7e1e 35%,#d62976 70%,#962fbf 90%);border:0}
 
     /* Responsivo Header/Hero/Newsletter */
-    @media (max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .brand img{height:40px}
-    }
+    @media (max-width:900px){ .hero{grid-template-columns:1fr} .brand img{height:40px} }
     @media (max-width:800px){
       .nav{flex-wrap:wrap}
       .menu{order:3; width:100%; overflow:auto; padding-bottom:4px}
@@ -174,7 +171,6 @@
       .actions{order:1}
       .newsletter .newsletter-wrap{grid-template-columns:1fr;gap:10px}
       .newsletter .controls{flex-direction:column;align-items:stretch}
-      .btn, .btn-solid{justify-content:center}
     }
     @media (max-width:400px){
       .tab{flex:1;text-align:center}
@@ -184,7 +180,7 @@
   </style>
 </head>
 <body>
-  <div class="topbar">Envíos por Correos de Costa Rica · Entregas en la GAM por Uber Flash · Pago por transferencia o&nbsp;<strong>SINPE Móvil</strong></div>
+  <div class="topbar">Envíos por Correos de Costa Rica · Entregas en la GAM por Uber Flash · Pago por transferencia o <strong>SINPE Móvil</strong></div>
 
   <header>
     <nav class="nav">
@@ -220,14 +216,13 @@
       </div>
 
       <div class="actions">
-        <!-- Eliminado botón WhatsApp. Solo la bolsa moderna -->
+        <!-- Solo bolsa (moderna) -->
         <button id="openBag" class="bag-btn" title="Abrir canasta" aria-label="Abrir canasta">
-          <!-- Ícono bolsa moderno -->
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6 9h12l-1.2 10.2A2 2 0 0 1 14.82 21H9.18A2 2 0 0 1 7.2 19.2L6 9Z"/>
-            <path d="M16 9a4 4 0 0 0-8 0"/>
+          <svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="none" stroke="#0b0b0f" stroke-width="1.6" d="M7 10V8a5 5 0 0 1 10 0v2"/>
+            <path fill="none" stroke="#0b0b0f" stroke-width="1.6" d="M5.5 10h13l-1.2 10.2a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8L5.5 10Z"/>
           </svg>
-          <span id="bagCount" class="bag-badge">0</span>
+          <span id="bagCount">0</span>
         </button>
       </div>
     </nav>
@@ -243,13 +238,11 @@
          loading="lazy" style="border-radius: var(--radius); border:1px solid var(--border); box-shadow: var(--shadow);" />
   </section>
 
-  <!-- Newsletter (Netlify Forms) -->
+  <!-- Newsletter -->
   <section class="newsletter" id="suscripcion">
     <form name="newsletter" method="POST" netlify data-netlify="true" netlify-honeypot="bot-field" id="newsletterForm">
       <input type="hidden" name="form-name" value="newsletter" />
-      <p class="hidden">
-        <label>No llenar: <input name="bot-field" /></label>
-      </p>
+      <p class="hidden"><label>No llenar: <input name="bot-field" /></label></p>
       <div class="newsletter-wrap">
         <div class="text">
           <strong>Suscríbete a GreenSkin</strong>
@@ -257,7 +250,7 @@
         </div>
         <div class="controls">
           <input type="email" name="email" required placeholder="Tu correo electrónico" aria-label="Correo electrónico" autocomplete="email" inputmode="email" />
-          <button type="submit" class="btn btn-solid">Suscribirme</button>
+          <button type="submit" class="tab btn">Suscribirme</button>
         </div>
       </div>
       <p class="note mini">Al suscribirte aceptás recibir correos de GreenSkin. Podés darte de baja cuando quieras.</p>
@@ -274,7 +267,7 @@
     </div>
   </section>
 
-  <!-- GRID DE PRODUCTOS -->
+  <!-- GRID -->
   <section class="grid" id="productGrid" aria-live="polite"></section>
 
   <!-- Backdrop y Canasta -->
@@ -282,7 +275,7 @@
   <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Canasta de productos">
     <header>
       <span>Tu Canasta</span>
-      <button id="closeBag" class="btn" style="padding:6px 10px;border-radius:10px;">✕ Cerrar</button>
+      <button id="closeBag" class="tab" style="padding:6px 10px;border-radius:10px;">✕ Cerrar</button>
     </header>
     <div class="content">
       <div id="bagLines"></div>
@@ -304,8 +297,8 @@
         </p>
 
         <p class="note">* No cobramos en el sitio. Te contactaremos para confirmar el pedido y coordinar el <strong>envío por Correos de Costa Rica</strong> o la <strong>entrega en la GAM por Uber Flash</strong>.</p>
-        <button class="btn btn-solid" type="submit">Enviar pedido por correo</button>
-        <button class="btn" type="button" id="shareWA">Compartir por WhatsApp</button>
+        <button class="tab btn" type="submit">Enviar pedido por correo</button>
+        <button class="tab" type="button" id="shareWA">Compartir por WhatsApp</button>
       </form>
     </div>
   </aside>
@@ -321,7 +314,7 @@
     </div>
   </footer>
 
-  <!-- Floating buttons (más pequeños) -->
+  <!-- Botones flotantes -->
   <div class="fabs" aria-label="Acciones rápidas">
     <a class="fab fab-wa" href="https://wa.me/50686434830" target="_blank" aria-label="Escribir por WhatsApp" rel="noopener">
       <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.23c-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.61.13-.18.27-.7.88-.86 1.06-.16.18-.32.2-.6.07-.27-.13-1.14-.42-2.17-1.35-.8-.71-1.34-1.59-1.5-1.86-.16-.27-.02-.41.12-.54.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.13-.61-1.47-.84-2.02-.22-.53-.45-.46-.61-.47-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29s.99 2.65 1.13 2.83c.14.18 1.95 2.99 4.73 4.19.66.28 1.18.44 1.58.56.66.21 1.26.18 1.73.11.53-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.31zM16.02 3.2c-7.06 0-12.8 5.73-12.8 12.8 0 2.26.6 4.38 1.65 6.21L3.2 28.8l6.75-1.76a12.75 12.75 0 0 0 6.07 1.55c7.06 0 12.8-5.73 12.8-12.8s-5.74-12.8-12.8-12.8zm0 23.2c-2.16 0-4.18-.64-5.87-1.73l-.42-.27-4.01 1.05 1.07-3.9-.28-.43a10.63 10.63 0 1 1 9.51 5.28z"/></svg>
@@ -393,7 +386,7 @@ function updateBag(){
 
   const total = entries.reduce((s,[id,qty])=>{const p=CATALOG.find(x=>x.id===id); return s+p.price*qty;},0);
   const count = entries.reduce((s,[_id,qty])=>s+qty,0);
-  if (count){ bagCount.style.display='flex'; bagCount.textContent=count; } else { bagCount.style.display='none'; }
+  bagCount.style.display = count? 'inline-flex':'none'; bagCount.textContent = count;
 
   localStorage.setItem('greenskin_bag', JSON.stringify(bag));
 
@@ -407,11 +400,12 @@ function updateBag(){
   }
 }
 
-/* ------- Abrir/Cerrar canasta con historial y backdrop ------- */
+/* ------- Abrir/Cerrar canasta con historial, backdrop y body-lock ------- */
 function openDrawer(){
   drawer.classList.add('open');
   backdrop.classList.add('show');
   drawer.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';            // bloquea scroll de fondo
   history.pushState({bag:true}, '', window.location.href);
   bagPushedToHistory = true;
 }
@@ -419,6 +413,7 @@ function closeDrawer(useHistoryBack=true){
   drawer.classList.remove('open');
   backdrop.classList.remove('show');
   drawer.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';                  // restaura scroll
   if(useHistoryBack && bagPushedToHistory){
     bagPushedToHistory = false;
     if(history.state && history.state.bag) history.back();
