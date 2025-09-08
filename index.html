@@ -101,6 +101,31 @@
     footer{margin-top:30px;border-top:1px solid var(--border);background:#fff}
     .foot{max-width:1200px;margin:0 auto;padding:24px 18px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
     @media (max-width:700px){.foot{grid-template-columns:1fr}}
+
+    /* ====== Newsletter (AGREGADO) ====== */
+    .newsletter{max-width:1200px;margin:16px auto 0;padding:0 18px}
+    .newsletter .newsletter-wrap{
+      display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;
+      background:var(--accent-2);border:1px solid #c7ead8;border-radius:var(--radius);
+      padding:18px;box-shadow:var(--shadow)
+    }
+    .newsletter .text{display:flex;flex-direction:column;gap:4px}
+    .newsletter .text strong{font-size:18px}
+    .newsletter .sub{color:var(--muted);font-size:14px}
+    .newsletter .controls{display:flex;gap:10px;align-items:center}
+    .newsletter input[type="email"]{
+      flex:1;padding:12px 14px;border:1px solid var(--border);
+      border-radius:999px;outline:none
+    }
+    .newsletter .mini{font-size:12px;color:var(--muted);margin:8px 2px 0}
+    .newsletter .ok{color:#065f46;margin-top:8px}
+    .newsletter .err{color:#b91c1c;margin-top:8px}
+    .newsletter .hidden{display:none}
+    @media (max-width:800px){
+      .newsletter .newsletter-wrap{grid-template-columns:1fr;gap:10px}
+      .newsletter .controls{flex-direction:column;align-items:stretch}
+    }
+    /* ====== /Newsletter ====== */
   </style>
 </head>
 <body>
@@ -158,9 +183,33 @@
         <a href="#grid" class="btn">Añadir a la canasta</a>
       </div>
     </div>
-    <img src="img/hero-perfumes.jpg" alt="Fragancias Bath & Body Works sobre fondo blanco y hojas verdes"
+    <img src="img/hero-perfumes.jpg" alt="Perfumes Bath & Body Works en Costa Rica"
          loading="lazy" style="border-radius: var(--radius); border:1px solid var(--border); box-shadow: var(--shadow);" />
   </section>
+
+  <!-- ===== Newsletter (AGREGADO) ===== -->
+  <section class="newsletter" id="suscripcion">
+    <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="newsletterForm">
+      <input type="hidden" name="form-name" value="newsletter" />
+      <p class="hidden">
+        <label>No llenar: <input name="bot-field" /></label>
+      </p>
+      <div class="newsletter-wrap">
+        <div class="text">
+          <strong>Suscríbete a GreenSkin</strong>
+          <span class="sub">Recibe novedades y promos de Bath & Body Works.</span>
+        </div>
+        <div class="controls">
+          <input type="email" name="email" required placeholder="Tu correo electrónico" aria-label="Correo electrónico" />
+          <button type="submit" class="btn btn-solid">Suscribirme</button>
+        </div>
+      </div>
+      <p class="note mini">Al suscribirte aceptás recibir correos de GreenSkin. Podés darte de baja cuando quieras.</p>
+      <p id="nl-ok" class="ok" role="status" hidden>¡Listo! Te suscribimos con éxito 💚</p>
+      <p id="nl-err" class="err" role="status" hidden>Ups, no se pudo enviar. Probá de nuevo.</p>
+    </form>
+  </section>
+  <!-- ===== /Newsletter ===== -->
 
   <!-- TABS VISUALES -->
   <section class="tabs" id="grid">
@@ -378,6 +427,32 @@ shareWA.addEventListener('click', ()=>{
   const msg = `Hola, vengo de la web GreenSkin.%0AQuiero este pedido:%0A${lines}%0ATotal aprox: ${money(total)}%0APago por Transferencia o SINPE Móvil. ¿Me ayudan a coordinar el envío?`;
   window.open(`https://wa.me/50686434830?text=${msg}`, '_blank');
 });
+
+/* ===== Newsletter (Netlify Forms) — AGREGADO ===== */
+const nlForm = document.getElementById('newsletterForm');
+const nlOk = document.getElementById('nl-ok');
+const nlErr = document.getElementById('nl-err');
+
+if (nlForm) {
+  nlForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    nlOk.hidden = true; nlErr.hidden = true;
+
+    const formData = new FormData(nlForm);
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams([...formData]).toString(),
+      });
+      nlForm.reset();
+      nlOk.hidden = false;
+    } catch (err) {
+      nlErr.hidden = false;
+    }
+  });
+}
+/* ===== /Newsletter ===== */
 </script>
 </body>
 </html>
