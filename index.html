@@ -40,6 +40,8 @@
       padding:8px 16px;background:var(--accent-2);color:#065f46;font-weight:600;
       text-align:center;text-wrap:balance;word-break:keep-all
     }
+    /* Evita que se pegue al strong en móviles */
+    .topbar strong{margin-left:.3em;}
     @media (max-width:380px){ .topbar{font-size:12px;padding:6px 10px} }
 
     header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--border)}
@@ -59,11 +61,19 @@
     .search{display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid var(--border);padding:10px 12px;border-radius:999px;flex:1;max-width:520px}
     .search input{border:0;background:transparent;outline:none;width:100%}
     .actions{display:flex;gap:8px;flex-shrink:0}
-    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:10px 14px;border-radius:999px;background:#fff;cursor:pointer;transition:.2s;touch-action:manipulation}
-    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
-    .btn:active{transform:translateY(0)}
-    .btn-solid{background:var(--ink);color:#fff;border-color:var(--ink)}
-    .btn-wa{background:#25d366;border-color:#25d366;color:#073b1a}
+
+    /* Botón moderno de bolsa */
+    .bag-btn{
+      position:relative;display:inline-flex;align-items:center;justify-content:center;
+      width:44px;height:44px;border-radius:12px;border:1px solid var(--border);background:#fff;
+      cursor:pointer;transition:.2s;box-shadow:0 2px 0 rgba(0,0,0,.03)
+    }
+    .bag-btn svg{width:22px;height:22px;fill:none;stroke:#111;stroke-width:1.8}
+    .bag-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    .bag-badge{
+      position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;
+      background:#ef4444;color:#fff;font-size:12px;display:none;align-items:center;justify-content:center;border:2px solid #fff
+    }
 
     /* Hero */
     .hero{max-width:1200px;margin:22px auto;padding:0 14px;display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:center}
@@ -131,16 +141,16 @@
     .newsletter .err{color:#b91c1c;margin-top:8px}
     .newsletter .hidden{display:none}
 
-    /* Floating Action Buttons (WhatsApp / Instagram) */
+    /* Floating Action Buttons (WhatsApp / Instagram) — más pequeños */
     .fabs{
-      position:fixed;right:calc(14px + var(--safe-right));bottom:calc(14px + var(--safe-bottom));
-      display:flex;flex-direction:column;gap:12px;z-index:80
+      position:fixed;right:calc(12px + var(--safe-right));bottom:calc(12px + var(--safe-bottom));
+      display:flex;flex-direction:column;gap:10px;z-index:80
     }
     .fab{
-      width:54px;height:54px;border-radius:999px;display:flex;align-items:center;justify-content:center;
-      box-shadow:0 12px 24px rgba(0,0,0,.18); border:1px solid var(--border); background:#fff
+      width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 10px 18px rgba(0,0,0,.15); border:1px solid var(--border); background:#fff
     }
-    .fab svg{width:28px;height:28px;display:block}
+    .fab svg{width:22px;height:22px;display:block}
     .fab-wa{background:#25d366;border-color:#1fb655}
     .fab-wa svg{fill:#053b1c}
     .fab-ig{
@@ -148,8 +158,8 @@
       border:0;
     }
     @media (max-width:480px){
-      .fab{width:50px;height:50px}
-      .fab svg{width:26px;height:26px}
+      .fab{width:42px;height:42px}
+      .fab svg{width:20px;height:20px}
     }
 
     /* Responsivo Header/Hero/Newsletter */
@@ -174,7 +184,7 @@
   </style>
 </head>
 <body>
-  <div class="topbar">Envíos por Correos de Costa Rica · Entregas en la GAM por Uber Flash · Pago por transferencia o <strong>SINPE Móvil</strong></div>
+  <div class="topbar">Envíos por Correos de Costa Rica · Entregas en la GAM por Uber Flash · Pago por transferencia o&nbsp;<strong>SINPE Móvil</strong></div>
 
   <header>
     <nav class="nav">
@@ -210,8 +220,15 @@
       </div>
 
       <div class="actions">
-        <button class="btn btn-wa" onclick="window.open('https://wa.me/50686434830','_blank')">WhatsApp</button>
-        <button id="openBag" class="btn btn-solid bag-btn" title="Canasta" aria-label="Abrir canasta">🧺 <span id="bagCount" style="display:none; margin-left:6px; background:#ef4444; color:#fff; border-radius:999px; padding:2px 6px; font-size:12px;">0</span></button>
+        <!-- Eliminado botón WhatsApp. Solo la bolsa moderna -->
+        <button id="openBag" class="bag-btn" title="Abrir canasta" aria-label="Abrir canasta">
+          <!-- Ícono bolsa moderno -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 9h12l-1.2 10.2A2 2 0 0 1 14.82 21H9.18A2 2 0 0 1 7.2 19.2L6 9Z"/>
+            <path d="M16 9a4 4 0 0 0-8 0"/>
+          </svg>
+          <span id="bagCount" class="bag-badge">0</span>
+        </button>
       </div>
     </nav>
   </header>
@@ -281,7 +298,6 @@
         <label><input type="radio" name="pago" value="Transferencia bancaria" checked/> Transferencia bancaria</label>
         <label><input type="radio" name="pago" value="SINPE Móvil"/> SINPE Móvil</label>
 
-        <!-- Nota de beneficiario dinámica -->
         <p class="note" id="payBeneficiary" style="margin-top:4px;">
           Las <strong>transferencias</strong> o <strong>SINPE Móvil</strong> salen a nombre de
           <strong>Dayana Gabriela Quesada Porras</strong>.
@@ -305,14 +321,12 @@
     </div>
   </footer>
 
-  <!-- Floating buttons -->
+  <!-- Floating buttons (más pequeños) -->
   <div class="fabs" aria-label="Acciones rápidas">
     <a class="fab fab-wa" href="https://wa.me/50686434830" target="_blank" aria-label="Escribir por WhatsApp" rel="noopener">
-      <!-- WhatsApp SVG -->
       <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.23c-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.61.13-.18.27-.7.88-.86 1.06-.16.18-.32.2-.6.07-.27-.13-1.14-.42-2.17-1.35-.8-.71-1.34-1.59-1.5-1.86-.16-.27-.02-.41.12-.54.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.13-.61-1.47-.84-2.02-.22-.53-.45-.46-.61-.47-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29s.99 2.65 1.13 2.83c.14.18 1.95 2.99 4.73 4.19.66.28 1.18.44 1.58.56.66.21 1.26.18 1.73.11.53-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.31zM16.02 3.2c-7.06 0-12.8 5.73-12.8 12.8 0 2.26.6 4.38 1.65 6.21L3.2 28.8l6.75-1.76a12.75 12.75 0 0 0 6.07 1.55c7.06 0 12.8-5.73 12.8-12.8s-5.74-12.8-12.8-12.8zm0 23.2c-2.16 0-4.18-.64-5.87-1.73l-.42-.27-4.01 1.05 1.07-3.9-.28-.43a10.63 10.63 0 1 1 9.51 5.28z"/></svg>
     </a>
     <a class="fab fab-ig" href="https://www.instagram.com/greenskincr" target="_blank" aria-label="Ir a Instagram" rel="noopener">
-      <!-- Instagram SVG (blanco) -->
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path fill="#fff" d="M12 2.2c3.2 0 3.6.01 4.9.07 1.17.05 1.8.24 2.22.4.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.35 1.05.4 2.22.06 1.3.07 1.7.07 4.9s-.01 3.6-.07 4.9c-.05 1.17-.24 1.8-.4 2.22a3.78 3.78 0 0 1-.9 1.38 3.78 3.78 0 0 1-1.38.9c-.42.16-1.05.35-2.22.4-1.3.06-1.7.07-4.9.07s-3.6-.01-4.9-.07c-1.17-.05-1.8-.24-2.22-.4a3.78 3.78 0 0 1-1.38-.9 3.78 3.78 0 0 1-.9-1.38c-.16-.42-.35-1.05-.4-2.22C2.21 15.6 2.2 15.2 2.2 12s.01-3.6.07-4.9c.05-1.17.24-1.8.4-2.22.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.05-.35 2.22-.4C8.4 2.21 8.8 2.2 12 2.2m0-2.2C8.75 0 8.32.01 7 .07 5.66.13 4.69.35 3.84.68A6 6 0 0 0 1.5 2.5 6 6 0 0 0 .68 3.84C.35 4.69.13 5.66.07 7 .01 8.32 0 8.75 0 12s.01 3.68.07 5c.06 1.34.28 2.31.61 3.16.33.85.82 1.57 1.66 2.41.84.84 1.56 1.33 2.41 1.66.85.33 1.82.55 3.16.61 1.32.06 1.75.07 5 .07s3.68-.01 5-.07c1.34-.06 2.31-.28 3.16-.61.85-.33 1.57-.82 2.41-1.66.84-.84 1.33-1.56 1.66-2.41.33-.85.55-1.82.61-3.16.06-1.32.07-1.75.07-5s-.01-3.68-.07-5c-.06-1.34-.28-2.31-.61-3.16A6 6 0 0 0 21.5 1.5 6 6 0 0 0 20.16.68C19.31.35 18.34.13 17 .07 15.68.01 15.25 0 12 0z"/>
         <path fill="#fff" d="M12 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84m0-2.04a8.2 8.2 0 1 1 0 16.4 8.2 8.2 0 0 1 0-16.4zM18.4 4.6a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/>
@@ -379,7 +393,7 @@ function updateBag(){
 
   const total = entries.reduce((s,[id,qty])=>{const p=CATALOG.find(x=>x.id===id); return s+p.price*qty;},0);
   const count = entries.reduce((s,[_id,qty])=>s+qty,0);
-  bagCount.style.display = count? 'inline-block':'none'; bagCount.textContent = count;
+  if (count){ bagCount.style.display='flex'; bagCount.textContent=count; } else { bagCount.style.display='none'; }
 
   localStorage.setItem('greenskin_bag', JSON.stringify(bag));
 
